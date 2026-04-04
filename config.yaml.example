@@ -1,0 +1,24 @@
+watch:
+  teams:
+    - 横浜DeNAベイスターズ
+    - DeNA
+    - ベイスターズ
+  players:
+    - 山本祐大
+    - 坂本裕哉
+
+feeds:
+  - url: https://full-count.jp/feed/
+    name: Full-Count
+  - url: https://full-count.jp/category/npb/feed/
+    name: Full-Count NPB
+  - url: https://www.baseballchannel.jp/feed/
+    name: Baseball Channel
+  - url: https://baseballking.jp/feed
+    name: Baseball King
+  - url: https://number.bunshun.jp/list/feed
+    name: Number Web
+
+# APIキーは環境変数 ANTHROPIC_API_KEY から取得
+anthropic:
+  model: claude-sonnet-4-20250514
