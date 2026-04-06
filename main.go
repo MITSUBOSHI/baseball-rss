@@ -11,6 +11,7 @@ import (
 	"github.com/MITSUBOSHI/baseball-rss/feed"
 	"github.com/MITSUBOSHI/baseball-rss/filter"
 	"github.com/MITSUBOSHI/baseball-rss/output"
+	"github.com/MITSUBOSHI/baseball-rss/scrape"
 	"github.com/MITSUBOSHI/baseball-rss/summarize"
 )
 
@@ -36,9 +37,15 @@ func main() {
 
 	ctx := context.Background()
 
-	articles := feed.FetchAll(ctx, cfg.Feeds)
+	var articles []feed.Article
+	if len(cfg.Feeds) > 0 {
+		articles = append(articles, feed.FetchAll(ctx, cfg.Feeds)...)
+	}
+	if len(cfg.Sites) > 0 {
+		articles = append(articles, scrape.ScrapeAll(ctx, cfg.Sites)...)
+	}
 	if len(articles) == 0 {
-		fmt.Fprintf(os.Stderr, "Error: failed to fetch any articles from all feeds\n")
+		fmt.Fprintf(os.Stderr, "Error: failed to fetch any articles from all sources\n")
 		os.Exit(1)
 	}
 

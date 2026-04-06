@@ -1,6 +1,6 @@
 # baseball-rss
 
-NPB野球ニュースのRSSフィードからwatch対象の球団・選手に関する記事を取得し、Claude APIで要約するCLIツール。
+NPB野球ニュースをRSSフィードとWebクローリングで取得し、watch対象の球団・選手に関する記事をフィルタリング、Claude APIで要約するCLIツール。
 
 ## セットアップ
 
@@ -12,7 +12,7 @@ cp config.yaml.example config.yaml
 
 ## 設定
 
-`config.yaml` でwatch対象とフィードURLを管理します。
+`config.yaml` でwatch対象、RSSフィードURL、クローリング対象サイトを管理します。
 
 ```yaml
 watch:
@@ -24,6 +24,7 @@ watch:
     - 山本祐大
     - 坂本裕哉
 
+# RSSフィード
 feeds:
   - url: https://full-count.jp/feed/
     name: Full-Count
@@ -31,7 +32,19 @@ feeds:
     name: Baseball Channel
   - url: https://baseballking.jp/feed
     name: Baseball King
+
+# Webクローリング（RSS非対応サイト向け）
+sites:
+  - url: https://baseballking.jp/news/
+    name: Baseball King (scrape)
+    link_selector: "a[href*='/ns/']"
+    title_selector: "h3"
+  - url: https://www.baseballchannel.jp/npb/
+    name: Baseball Channel (scrape)
+    link_selector: "a[href*='/npb/2']"
 ```
+
+`sites` ではCSSセレクタで記事リンクとタイトルを指定します。RSSとクローリングの結果はURL単位で重複排除されます。
 
 ## 使い方
 

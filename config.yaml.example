@@ -19,6 +19,18 @@ feeds:
   - url: https://number.bunshun.jp/list/feed
     name: Number Web
 
+# サイトページのクローリング（RSS非対応サイト向け）
+# link_selector: 記事リンクのCSSセレクタ
+# title_selector: リンク内のタイトル要素（省略時はリンクテキストを使用）
+sites:
+  - url: https://baseballking.jp/news/
+    name: Baseball King (scrape)
+    link_selector: "a[href*='/ns/']"
+    title_selector: "h3"
+  - url: https://www.baseballchannel.jp/npb/
+    name: Baseball Channel (scrape)
+    link_selector: "a[href*='/npb/2']"
+
 # APIキーは環境変数 ANTHROPIC_API_KEY から取得
 anthropic:
   model: claude-sonnet-4-20250514

@@ -10,6 +10,7 @@ import (
 type Config struct {
 	Watch     Watch      `yaml:"watch"`
 	Feeds     []Feed     `yaml:"feeds"`
+	Sites     []Site     `yaml:"sites"`
 	Anthropic Anthropic  `yaml:"anthropic"`
 }
 
@@ -27,6 +28,13 @@ type Feed struct {
 	Name string `yaml:"name"`
 }
 
+type Site struct {
+	URL           string `yaml:"url"`
+	Name          string `yaml:"name"`
+	LinkSelector  string `yaml:"link_selector"`
+	TitleSelector string `yaml:"title_selector"`
+}
+
 type Anthropic struct {
 	Model string `yaml:"model"`
 }
@@ -42,8 +50,8 @@ func Load(path string) (*Config, error) {
 		return nil, fmt.Errorf("failed to parse config file: %w", err)
 	}
 
-	if len(cfg.Feeds) == 0 {
-		return nil, fmt.Errorf("no feeds configured")
+	if len(cfg.Feeds) == 0 && len(cfg.Sites) == 0 {
+		return nil, fmt.Errorf("no feeds or sites configured")
 	}
 
 	if len(cfg.Watch.Teams) == 0 && len(cfg.Watch.Players) == 0 {
