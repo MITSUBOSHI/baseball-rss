@@ -49,7 +49,7 @@ func Summarize(ctx context.Context, cfg config.Anthropic, articles []filter.Matc
 		},
 	})
 	if err != nil {
-		return "", fmt.Errorf("Claude API error: %w", err)
+		return "", fmt.Errorf("claude API error: %w", err)
 	}
 
 	for _, block := range resp.Content {
